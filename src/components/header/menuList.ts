@@ -1,1 +1,1 @@
-export const route: string[] = ['Home', 'Quadro']
+export const route: string[] = ['Home', 'Quadro', 'Contato']

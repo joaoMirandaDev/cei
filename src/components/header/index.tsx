@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Logo from '../../assets/logo.png'
+import Instagram from '../../assets/instagram.png'
+import WhatsApp from '../../assets/whatsApp.png'
 import './index.css'
 import { route } from './menuList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,6 +9,24 @@ import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header() {
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false)
+  const [displayWidth, setDisplayWidth] = useState<boolean>(false)
+
+  const handleResize = () => {
+    if (window.innerWidth < 769) {
+      setDisplayWidth(false)
+      setMenuOpen(false)
+    } else {
+      setDisplayWidth(true)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    handleResize()
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen)
@@ -37,6 +57,16 @@ export default function Header() {
             </span>
           ))}
         </div>
+        {displayWidth && (
+          <div className="redeSocial">
+            <a href="https://www.instagram.com/ceicentroeletrico?igsh=MXB4Y2FsNzVoemFqOA==">
+              <img src={Instagram} alt="Logo" className="redeSocial" />
+            </a>
+            <a>
+              <img src={WhatsApp} alt="Logo" className="redeSocial" />
+            </a>
+          </div>
+        )}
         {!isMenuOpen && (
           <button className="menu-toggle" onClick={toggleMenu}>
             <FontAwesomeIcon

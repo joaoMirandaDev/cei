@@ -6,27 +6,21 @@ import './index.css'
 import { route } from './menuList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
+import useWindowWidth from '../../utils/responsive'
 
 export default function Header() {
+  const windowWidth = useWindowWidth()
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false)
   const [displayWidth, setDisplayWidth] = useState<boolean>(false)
 
-  const handleResize = () => {
-    if (window.innerWidth < 769) {
+  useEffect(() => {
+    if (windowWidth < 769) {
       setDisplayWidth(false)
-      setMenuOpen(false)
     } else {
       setDisplayWidth(true)
     }
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-
-    handleResize()
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    setMenuOpen(false)
+  }, [windowWidth])
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen)
